@@ -237,8 +237,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/dress/:id',
-        builder: (_, state) =>
-            DressDetailScreen(dressId: state.pathParameters['id']!),
+        builder: (_, state) => DressDetailScreen(
+          dressId: state.pathParameters['id']!,
+          heroTag: state.extra as String?,
+        ),
       ),
       GoRoute(
         path: '/booking/:id',

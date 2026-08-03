@@ -5,6 +5,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { PageHeader, StatusBadge } from "@/components/shared";
 import { DataTable } from "@/components/tables/data-table";
 import { Button } from "@/components/ui/button";
+import { labelOf, planLabel, statusLabel, storeCategoryLabel } from "@/lib/labels";
 import { useStoreStore } from "@/stores/store-store";
 import { useSubscriptionStore } from "@/stores/subscription-store";
 import { useUserStore } from "@/stores/user-store";
@@ -28,50 +29,57 @@ export default function StoresPage() {
 
   const columns = useMemo<ColumnDef<Store>[]>(
     () => [
-      { accessorKey: "name", header: "Name" },
+      { accessorKey: "name", header: "الاسم" },
       {
         id: "owner",
-        header: "Owner",
+        header: "المالك",
         cell: ({ row }) =>
           users.find((u) => u.id === row.original.ownerId)?.name ?? "—",
       },
       {
         accessorKey: "address",
-        header: "Address",
+        header: "العنوان",
         cell: ({ row }) => (
           <span>
-            {row.original.address}, {row.original.city}
+            {row.original.address}، {row.original.city}
           </span>
         ),
       },
-      { accessorKey: "category", header: "Category" },
+      {
+        accessorKey: "category",
+        header: "الفئة",
+        cell: ({ row }) =>
+          labelOf(storeCategoryLabel, row.original.category),
+      },
       {
         id: "subscription",
-        header: "Subscription",
+        header: "الاشتراك",
         cell: ({ row }) => {
           const sub = subscriptions.find(
             (s) => s.id === row.original.subscriptionId,
           );
-          return sub ? `${sub.plan} · ${sub.status}` : "None";
+          return sub
+            ? `${labelOf(planLabel, sub.plan)} · ${labelOf(statusLabel, sub.status)}`
+            : "لا يوجد";
         },
       },
       {
         accessorKey: "status",
-        header: "Status",
+        header: "الحالة",
         cell: ({ row }) => <StatusBadge status={row.original.status} />,
       },
       {
         id: "actions",
-        header: "Actions",
+        header: "إجراءات",
         cell: ({ row }) => {
           const s = row.original;
           return (
             <div className="flex flex-wrap gap-1">
               <Button size="sm" variant="outline" onClick={() => setStatus(s.id, "approved")}>
-                Approve
+                قبول
               </Button>
               <Button size="sm" variant="secondary" onClick={() => setStatus(s.id, "rejected")}>
-                Reject
+                رفض
               </Button>
               <Button
                 size="sm"
@@ -80,16 +88,16 @@ export default function StoresPage() {
                   setStatus(s.id, s.status === "suspended" ? "active" : "suspended")
                 }
               >
-                {s.status === "suspended" ? "Activate" : "Suspend"}
+                {s.status === "suspended" ? "تفعيل" : "إيقاف"}
               </Button>
               <Button
                 size="sm"
                 variant="destructive"
                 onClick={() => {
-                  if (confirm(`Delete ${s.name}?`)) deleteStore(s.id);
+                  if (confirm(`حذف ${s.name}؟`)) deleteStore(s.id);
                 }}
               >
-                Delete
+                حذف
               </Button>
             </div>
           );
@@ -102,27 +110,27 @@ export default function StoresPage() {
   return (
     <div>
       <PageHeader
-        title="Stores"
-        description="Approve and moderate rental store businesses."
+        title="المحلات"
+        description="الموافقة على محلات التأجير وإدارتها."
         actions={
           <select
             className="h-10 rounded-md border border-border bg-card px-3 text-sm"
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
           >
-            <option value="all">All statuses</option>
-            <option value="pending">Pending</option>
-            <option value="active">Active</option>
-            <option value="approved">Approved</option>
-            <option value="suspended">Suspended</option>
-            <option value="rejected">Rejected</option>
+            <option value="all">كل الحالات</option>
+            <option value="pending">قيد المراجعة</option>
+            <option value="active">نشط</option>
+            <option value="approved">مقبول</option>
+            <option value="suspended">موقوف</option>
+            <option value="rejected">مرفوض</option>
           </select>
         }
       />
       <DataTable
         columns={columns}
         data={data}
-        searchPlaceholder="Search stores…"
+        searchPlaceholder="ابحث عن محل…"
         globalFilterFn={(row, q) =>
           [row.name, row.city, row.category, row.address]
             .join(" ")

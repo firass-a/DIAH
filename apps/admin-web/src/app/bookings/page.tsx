@@ -5,6 +5,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { PageHeader, StatusBadge } from "@/components/shared";
 import { DataTable } from "@/components/tables/data-table";
 import { Button } from "@/components/ui/button";
+import { bookingStatusLabel, labelOf } from "@/lib/labels";
 import { formatCurrency } from "@/lib/utils";
 import { useBookingStore } from "@/stores/booking-store";
 import { useDressStore } from "@/stores/dress-store";
@@ -39,44 +40,53 @@ export default function BookingsPage() {
 
   const columns = useMemo<ColumnDef<Booking>[]>(
     () => [
-      { accessorKey: "id", header: "Booking ID" },
+      {
+        accessorKey: "id",
+        header: "رقم الحجز",
+        cell: ({ row }) => <span dir="ltr">{row.original.id}</span>,
+      },
       {
         id: "customer",
-        header: "Customer",
+        header: "الزبون",
         cell: ({ row }) =>
           users.find((u) => u.id === row.original.customerId)?.name ?? "—",
       },
       {
         id: "dress",
-        header: "Dress",
+        header: "الفستان",
         cell: ({ row }) =>
           dresses.find((d) => d.id === row.original.dressId)?.name ?? "—",
       },
       {
         id: "store",
-        header: "Store",
+        header: "المحل",
         cell: ({ row }) =>
-          stores.find((s) => s.id === row.original.storeId)?.name ?? "Owner",
+          stores.find((s) => s.id === row.original.storeId)?.name ?? "مؤجّر",
       },
       {
         id: "dates",
-        header: "Dates",
-        cell: ({ row }) =>
-          `${row.original.startDate} → ${row.original.endDate}`,
+        header: "التواريخ",
+        cell: ({ row }) => (
+          <span dir="ltr">
+            {row.original.startDate} → {row.original.endDate}
+          </span>
+        ),
       },
       {
         accessorKey: "price",
-        header: "Amount",
-        cell: ({ row }) => formatCurrency(row.original.price),
+        header: "المبلغ",
+        cell: ({ row }) => (
+          <span dir="ltr">{formatCurrency(row.original.price)}</span>
+        ),
       },
       {
         accessorKey: "status",
-        header: "Status",
+        header: "الحالة",
         cell: ({ row }) => <StatusBadge status={row.original.status} />,
       },
       {
         id: "actions",
-        header: "Actions",
+        header: "إجراءات",
         cell: ({ row }) => (
           <div className="flex flex-wrap gap-1">
             <select
@@ -88,7 +98,7 @@ export default function BookingsPage() {
             >
               {STATUSES.map((s) => (
                 <option key={s} value={s}>
-                  {s}
+                  {labelOf(bookingStatusLabel, s)}
                 </option>
               ))}
             </select>
@@ -97,7 +107,7 @@ export default function BookingsPage() {
               variant="destructive"
               onClick={() => updateStatus(row.original.id, "cancelled")}
             >
-              Cancel
+              إلغاء
             </Button>
           </div>
         ),
@@ -109,18 +119,18 @@ export default function BookingsPage() {
   return (
     <div>
       <PageHeader
-        title="Bookings"
-        description="Control rental requests across customers, owners, and stores."
+        title="الحجوزات"
+        description="إدارة طلبات الإيجار بين الزبائن والمؤجّرين والمحلات."
         actions={
           <select
             className="h-10 rounded-md border border-border bg-card px-3 text-sm"
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
           >
-            <option value="all">All statuses</option>
+            <option value="all">كل الحالات</option>
             {STATUSES.map((s) => (
               <option key={s} value={s}>
-                {s}
+                {labelOf(bookingStatusLabel, s)}
               </option>
             ))}
           </select>
@@ -129,7 +139,7 @@ export default function BookingsPage() {
       <DataTable
         columns={columns}
         data={data}
-        searchPlaceholder="Search bookings…"
+        searchPlaceholder="ابحث في الحجوزات…"
         globalFilterFn={(row, q) =>
           [row.id, row.status, row.customerId, row.dressId]
             .join(" ")

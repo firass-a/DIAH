@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import { Cairo, Noto_Naskh_Arabic } from "next/font/google";
 import { AdminShell } from "@/components/layout/admin-shell";
 import "./globals.css";
 
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-sans",
+const cairo = Cairo({
+  subsets: ["arabic", "latin"],
+  variable: "--font-cairo",
 });
 
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
+const naskh = Noto_Naskh_Arabic({
+  subsets: ["arabic"],
   weight: ["500", "600", "700"],
-  variable: "--font-display",
+  variable: "--font-naskh",
 });
 
 export const metadata: Metadata = {
-  title: "Diah Admin",
-  description: "Diah platform administration dashboard",
+  title: "لوحة دِياه",
+  description: "لوحة إدارة منصة دِياه",
 };
 
 export default function RootLayout({
@@ -25,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${dmSans.variable} ${cormorant.variable} font-sans`}>
+    <html lang="ar" dir="rtl">
+      <body className={`${cairo.variable} ${naskh.variable} font-sans antialiased`}>
         <AdminShell>{children}</AdminShell>
       </body>
     </html>

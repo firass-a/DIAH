@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { ChartCard, DashboardCard, PageHeader, StatusBadge } from "@/components/shared";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { dressCategoryLabel } from "@/lib/labels";
 import { seedMonthlyStats } from "@/lib/mock-data/seed";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { useBookingStore } from "@/stores/booking-store";
@@ -56,7 +57,10 @@ export default function DashboardPage() {
       acc[d.category] = (acc[d.category] ?? 0) + 1;
       return acc;
     }, {}),
-  ).map(([name, value]) => ({ name, value }));
+  ).map(([name, value]) => ({
+    name: dressCategoryLabel[name] ?? name,
+    value,
+  }));
 
   const topDresses = [...dresses]
     .sort((a, b) => b.rentalCount - a.rentalCount)
@@ -65,31 +69,31 @@ export default function DashboardPage() {
   return (
     <div>
       <PageHeader
-        title="Dashboard"
-        description="Live snapshot of the Diah marketplace (local prototype data)."
+        title="لوحة التحكم"
+        description="نظرة مباشرة على سوق دِياه (بيانات تجريبية محلية)."
       />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <DashboardCard title="Total Users" value={users.length} icon={<Users className="h-4 w-4" />} />
-        <DashboardCard title="Customers" value={customers} icon={<Users className="h-4 w-4" />} />
-        <DashboardCard title="Stores" value={stores.length} icon={<Store className="h-4 w-4" />} />
-        <DashboardCard title="Dresses" value={dresses.length} icon={<Shirt className="h-4 w-4" />} />
-        <DashboardCard title="Bookings" value={bookings.length} icon={<CalendarDays className="h-4 w-4" />} />
-        <DashboardCard title="Revenue" value={formatCurrency(revenue)} icon={<Wallet className="h-4 w-4" />} />
+        <DashboardCard title="إجمالي المستخدمين" value={users.length} icon={<Users className="h-4 w-4" />} />
+        <DashboardCard title="الزبائن" value={customers} icon={<Users className="h-4 w-4" />} />
+        <DashboardCard title="المحلات" value={stores.length} icon={<Store className="h-4 w-4" />} />
+        <DashboardCard title="الفساتين" value={dresses.length} icon={<Shirt className="h-4 w-4" />} />
+        <DashboardCard title="الحجوزات" value={bookings.length} icon={<CalendarDays className="h-4 w-4" />} />
+        <DashboardCard title="الإيرادات" value={formatCurrency(revenue)} icon={<Wallet className="h-4 w-4" />} />
         <DashboardCard
-          title="Active Subscriptions"
+          title="الاشتراكات النشطة"
           value={activeSubs}
           icon={<CreditCard className="h-4 w-4" />}
         />
         <DashboardCard
-          title="Pending Dresses"
+          title="فساتين قيد المراجعة"
           value={dresses.filter((d) => d.status === "pending").length}
-          hint="Awaiting approval"
+          hint="بانتظار الموافقة"
         />
       </div>
 
       <div className="mt-6 grid gap-4 xl:grid-cols-2">
-        <ChartCard title="Revenue over time">
+        <ChartCard title="الإيرادات عبر الزمن">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={seedMonthlyStats}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e6e0ea" />
@@ -100,7 +104,7 @@ export default function DashboardPage() {
             </LineChart>
           </ResponsiveContainer>
         </ChartCard>
-        <ChartCard title="Bookings over time">
+        <ChartCard title="الحجوزات عبر الزمن">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={seedMonthlyStats}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e6e0ea" />
@@ -111,7 +115,7 @@ export default function DashboardPage() {
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
-        <ChartCard title="User growth">
+        <ChartCard title="نمو المستخدمين">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={seedMonthlyStats}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e6e0ea" />
@@ -122,7 +126,7 @@ export default function DashboardPage() {
             </LineChart>
           </ResponsiveContainer>
         </ChartCard>
-        <ChartCard title="Popular categories">
+        <ChartCard title="الفئات الأكثر شيوعاً">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie data={categoryData} dataKey="value" nameKey="name" outerRadius={90} label>
@@ -139,23 +143,27 @@ export default function DashboardPage() {
       <div className="mt-6 grid gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Most rented dresses</CardTitle>
+            <CardTitle className="text-lg">الأكثر إيجاراً</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             {topDresses.map((d) => (
               <div key={d.id} className="flex items-center justify-between gap-3">
                 <div className="min-w-0">
                   <p className="truncate font-medium">{d.name}</p>
-                  <p className="text-xs text-muted-foreground">{d.category}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {dressCategoryLabel[d.category] ?? d.category}
+                  </p>
                 </div>
-                <p className="text-sm font-semibold">{d.rentalCount}×</p>
+                <p className="text-sm font-semibold" dir="ltr">
+                  {d.rentalCount}×
+                </p>
               </div>
             ))}
           </CardContent>
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Recent activity</CardTitle>
+            <CardTitle className="text-lg">آخر النشاطات</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             {[...users]
@@ -164,7 +172,7 @@ export default function DashboardPage() {
               .map((u) => (
                 <div key={u.id} className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium">New user · {u.name}</p>
+                    <p className="font-medium">مستخدم جديد · {u.name}</p>
                     <p className="text-xs text-muted-foreground">{formatDate(u.createdAt)}</p>
                   </div>
                   <StatusBadge status={u.role} />
@@ -176,7 +184,9 @@ export default function DashboardPage() {
               .map((b) => (
                 <div key={b.id} className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium">Booking · {b.id}</p>
+                    <p className="font-medium">
+                      حجز · <span dir="ltr">{b.id}</span>
+                    </p>
                     <p className="text-xs text-muted-foreground">{formatDate(b.createdAt)}</p>
                   </div>
                   <StatusBadge status={b.status} />

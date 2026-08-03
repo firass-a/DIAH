@@ -232,7 +232,7 @@ class _OwnerOnboardingScreenState extends ConsumerState<OwnerOnboardingScreen> {
                             style: TextStyle(
                               fontWeight: draft.dressCountRange == c
                                   ? FontWeight.w700
-                                  : FontWeight.w500,
+                                  : FontWeight.w700,
                             ),
                           ),
                         ),

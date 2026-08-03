@@ -42,9 +42,13 @@ class DiahApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       builder: (context, child) {
+        // Default weight for any Text that doesn't set its own fontWeight.
         return Directionality(
           textDirection: textDirectionOf(locale),
-          child: child ?? const SizedBox.shrink(),
+          child: DefaultTextStyle.merge(
+            style: const TextStyle(fontWeight: FontWeight.w600),
+            child: child ?? const SizedBox.shrink(),
+          ),
         );
       },
       routerConfig: router,

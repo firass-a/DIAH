@@ -1,5 +1,4 @@
-﻿import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,12 +9,19 @@ import '../../../../core/fake_backend/providers.dart';
 import '../../../../core/localization/app_strings.dart';
 import '../../../../core/theme/diah_theme.dart';
 import '../../../../core/widgets/diah_widgets.dart';
+import '../../../../core/widgets/dress_image.dart';
 import '../../../../shared/models/models.dart';
 
 class DressDetailScreen extends ConsumerWidget {
-  const DressDetailScreen({super.key, required this.dressId});
+  const DressDetailScreen({
+    super.key,
+    required this.dressId,
+    this.heroTag,
+  });
 
   final String dressId;
+  /// Must match the tapped [DressCard] tag to avoid duplicate Hero conflicts.
+  final String? heroTag;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -48,7 +54,7 @@ class DressDetailScreen extends ConsumerWidget {
             flexibleSpace: FlexibleSpaceBar(
               background: ImageGallery(
                 images: dress.images,
-                heroTag: 'dress-${dress.id}',
+                heroTag: heroTag ?? 'dress-detail-$dressId',
               ),
             ),
             actions: [
@@ -190,17 +196,11 @@ class DressDetailScreen extends ConsumerWidget {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(12),
-                            child: CachedNetworkImage(
-                              imageUrl: store.imageUrl ?? '',
+                            child: DressImage(
+                              source: store.imageUrl ?? '',
                               width: 56,
                               height: 56,
                               fit: BoxFit.cover,
-                              errorWidget: (_, _, _) => Container(
-                                width: 56,
-                                height: 56,
-                                color: DiahColors.softLavender,
-                                child: const Icon(Icons.storefront),
-                              ),
                             ),
                           ),
                           const SizedBox(width: 12),
@@ -230,11 +230,12 @@ class DressDetailScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: 24),
                   ] else if (owner != null) ...[
+                    // Privacy: never expose individual owner personal names.
                     Text(
-                      s.owner,
+                      s.personalWardrobe,
                       style: GoogleFonts.cormorantGaramond(
                         fontSize: 22,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -242,17 +243,22 @@ class DressDetailScreen extends ConsumerWidget {
                       child: Row(
                         children: [
                           CircleAvatar(
-                            backgroundImage: owner.profileImage != null
-                                ? NetworkImage(owner.profileImage!)
-                                : null,
-                            child: owner.profileImage == null
-                                ? Text(owner.fullName[0])
-                                : null,
+                            backgroundColor: DiahColors.softLavender,
+                            child: const Icon(
+                              Icons.checkroom_outlined,
+                              color: DiahColors.primary,
+                            ),
                           ),
                           const SizedBox(width: 12),
-                          Text(
-                            owner.fullName,
-                            style: const TextStyle(fontWeight: FontWeight.w600),
+                          Expanded(
+                            child: Text(
+                              s.t(
+                                'خزانة شخصية موثّقة',
+                                'Garde-robe personnelle vérifiée',
+                                'Verified personal wardrobe',
+                              ),
+                              style: const TextStyle(fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ],
                       ),

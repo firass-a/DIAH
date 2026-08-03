@@ -11,6 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { labelOf, roleLabel } from "@/lib/labels";
 import { formatDate } from "@/lib/utils";
 import { useBookingStore } from "@/stores/booking-store";
 import { useDressStore } from "@/stores/dress-store";
@@ -41,50 +42,56 @@ export default function UsersPage() {
     () => [
       {
         accessorKey: "name",
-        header: "Name",
+        header: "الاسم",
         cell: ({ row }) => (
           <div>
             <p className="font-medium">{row.original.name}</p>
-            <p className="text-xs text-muted-foreground">{row.original.email}</p>
+            <p className="text-xs text-muted-foreground" dir="ltr">
+              {row.original.email}
+            </p>
           </div>
         ),
       },
-      { accessorKey: "phone", header: "Phone" },
+      {
+        accessorKey: "phone",
+        header: "الهاتف",
+        cell: ({ row }) => <span dir="ltr">{row.original.phone}</span>,
+      },
       {
         accessorKey: "role",
-        header: "Role",
+        header: "الدور",
         cell: ({ row }) => <StatusBadge status={row.original.role} />,
       },
       {
         accessorKey: "createdAt",
-        header: "Registered",
+        header: "تاريخ التسجيل",
         cell: ({ row }) => formatDate(row.original.createdAt),
       },
       {
         accessorKey: "status",
-        header: "Status",
+        header: "الحالة",
         cell: ({ row }) => <StatusBadge status={row.original.status} />,
       },
       {
         id: "actions",
-        header: "Actions",
+        header: "إجراءات",
         cell: ({ row }) => {
           const u = row.original;
           return (
             <div className="flex flex-wrap gap-1">
               <Button size="sm" variant="outline" onClick={() => setSelected(u)}>
-                View
+                عرض
               </Button>
               <Button
                 size="sm"
                 variant="outline"
                 onClick={() =>
                   updateUser(u.id, {
-                    city: u.city === "Algiers" ? "Oran" : "Algiers",
+                    city: u.city === "الجزائر العاصمة" || u.city === "Algiers" ? "وهران" : "الجزائر العاصمة",
                   })
                 }
               >
-                Edit
+                تعديل
               </Button>
               <Button
                 size="sm"
@@ -96,16 +103,16 @@ export default function UsersPage() {
                   )
                 }
               >
-                {u.status === "suspended" ? "Activate" : "Suspend"}
+                {u.status === "suspended" ? "تفعيل" : "إيقاف"}
               </Button>
               <Button
                 size="sm"
                 variant="destructive"
                 onClick={() => {
-                  if (confirm(`Delete ${u.name}?`)) deleteUser(u.id);
+                  if (confirm(`حذف ${u.name}؟`)) deleteUser(u.id);
                 }}
               >
-                Delete
+                حذف
               </Button>
             </div>
           );
@@ -128,25 +135,25 @@ export default function UsersPage() {
   return (
     <div>
       <PageHeader
-        title="Users"
-        description="Manage customers, individual owners, and store owners."
+        title="المستخدمون"
+        description="إدارة الزبائن والمؤجّرين الأفراد وأصحاب المحلات."
         actions={
           <select
             className="h-10 rounded-md border border-border bg-card px-3 text-sm"
             value={roleFilter}
             onChange={(e) => setRoleFilter(e.target.value)}
           >
-            <option value="all">All roles</option>
-            <option value="customer">Customers</option>
-            <option value="individualOwner">Individual owners</option>
-            <option value="storeOwner">Store owners</option>
+            <option value="all">كل الأدوار</option>
+            <option value="customer">زبائن</option>
+            <option value="individualOwner">مؤجّرون أفراد</option>
+            <option value="storeOwner">أصحاب محلات</option>
           </select>
         }
       />
       <DataTable
         columns={columns}
         data={data}
-        searchPlaceholder="Search name, phone, email…"
+        searchPlaceholder="ابحث بالاسم أو الهاتف أو البريد…"
         globalFilterFn={(row, q) =>
           [row.name, row.phone, row.email, row.role, row.city]
             .join(" ")
@@ -163,25 +170,31 @@ export default function UsersPage() {
           {selected ? (
             <div className="space-y-3 text-sm">
               <p>
-                <span className="text-muted-foreground">Phone:</span>{" "}
-                {selected.phone}
+                <span className="text-muted-foreground">الهاتف:</span>{" "}
+                <span dir="ltr">{selected.phone}</span>
               </p>
               <p>
-                <span className="text-muted-foreground">Email:</span>{" "}
-                {selected.email}
+                <span className="text-muted-foreground">البريد:</span>{" "}
+                <span dir="ltr">{selected.email}</span>
               </p>
               <p>
-                <span className="text-muted-foreground">City:</span>{" "}
+                <span className="text-muted-foreground">المدينة:</span>{" "}
                 {selected.city}
               </p>
               <p>
-                <span className="text-muted-foreground">Role:</span>{" "}
-                {selected.role}
+                <span className="text-muted-foreground">الدور:</span>{" "}
+                {labelOf(roleLabel, selected.role)}
               </p>
               <div className="rounded-lg bg-muted p-3">
-                <p className="font-medium">Bookings: {userBookings.length}</p>
-                <p className="font-medium">Owned dresses: {userDresses.length}</p>
-                <p className="font-medium">Transactions: {userTx.length}</p>
+                <p className="font-medium">
+                  الحجوزات: <span dir="ltr">{userBookings.length}</span>
+                </p>
+                <p className="font-medium">
+                  الفساتين المملوكة: <span dir="ltr">{userDresses.length}</span>
+                </p>
+                <p className="font-medium">
+                  المعاملات: <span dir="ltr">{userTx.length}</span>
+                </p>
               </div>
             </div>
           ) : null}

@@ -25,7 +25,7 @@ interface DataTableProps<T> {
 export function DataTable<T>({
   columns,
   data,
-  searchPlaceholder = "Search…",
+  searchPlaceholder = "بحث…",
   globalFilterFn,
 }: DataTableProps<T>) {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -58,7 +58,7 @@ export function DataTable<T>({
       <div className="overflow-hidden rounded-xl border border-border bg-card">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-muted/60 text-left text-muted-foreground">
+            <thead className="bg-muted/60 text-start text-muted-foreground">
               {table.getHeaderGroups().map((hg) => (
                 <tr key={hg.id}>
                   {hg.headers.map((header) => (
@@ -86,7 +86,10 @@ export function DataTable<T>({
               {table.getRowModel().rows.length === 0 ? (
                 <tr>
                   <td colSpan={columns.length} className="p-6">
-                    <EmptyState title="No results" description="Try another search." />
+                    <EmptyState
+                      title="لا توجد نتائج"
+                      description="جرّب بحثاً آخر."
+                    />
                   </td>
                 </tr>
               ) : (
@@ -110,8 +113,8 @@ export function DataTable<T>({
           </table>
         </div>
         <div className="flex items-center justify-between border-t border-border px-4 py-3">
-          <p className="text-xs text-muted-foreground">
-            {filtered.length} record{filtered.length === 1 ? "" : "s"}
+          <p className="text-xs text-muted-foreground" dir="ltr">
+            {filtered.length} سجل
           </p>
           <div className="flex gap-2">
             <Button
@@ -120,7 +123,7 @@ export function DataTable<T>({
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             >
-              Previous
+              السابق
             </Button>
             <Button
               variant="outline"
@@ -128,7 +131,7 @@ export function DataTable<T>({
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
             >
-              Next
+              التالي
             </Button>
           </div>
         </div>

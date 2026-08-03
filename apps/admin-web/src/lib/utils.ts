@@ -1,12 +1,15 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+/** Arabic UI, Latin digits (0–9). */
+const LOCALE = "ar-DZ-u-nu-latn";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export function formatCurrency(amount: number, currency = "DZD") {
-  return new Intl.NumberFormat("en-DZ", {
+  return new Intl.NumberFormat(LOCALE, {
     style: "currency",
     currency,
     maximumFractionDigits: 0,
@@ -14,7 +17,7 @@ export function formatCurrency(amount: number, currency = "DZD") {
 }
 
 export function formatDate(iso: string) {
-  return new Intl.DateTimeFormat("en-GB", {
+  return new Intl.DateTimeFormat(LOCALE, {
     day: "2-digit",
     month: "short",
     year: "numeric",
@@ -22,7 +25,7 @@ export function formatDate(iso: string) {
 }
 
 export function formatDateTime(iso: string) {
-  return new Intl.DateTimeFormat("en-GB", {
+  return new Intl.DateTimeFormat(LOCALE, {
     day: "2-digit",
     month: "short",
     year: "numeric",

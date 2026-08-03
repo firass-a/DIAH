@@ -33,9 +33,10 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: assets/images/diah_logo.png
+  image_path: assets/images/diah_logo_icon.png
   adaptive_icon_background: "#F8F5FA"
-  adaptive_icon_foreground: assets/images/diah_logo.png
+  adaptive_icon_foreground: assets/images/diah_logo_icon.png
+  adaptive_icon_foreground_inset: 16
   remove_alpha_ios: true
 
 flutter:

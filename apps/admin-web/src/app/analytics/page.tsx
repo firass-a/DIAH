@@ -15,6 +15,7 @@ import {
   YAxis,
 } from "recharts";
 import { ChartCard, DashboardCard, PageHeader } from "@/components/shared";
+import { bookingStatusLabel, roleLabel } from "@/lib/labels";
 import { seedMonthlyStats } from "@/lib/mock-data/seed";
 import { formatCurrency } from "@/lib/utils";
 import { useBookingStore } from "@/stores/booking-store";
@@ -41,29 +42,35 @@ export default function AnalyticsPage() {
       acc[u.role] = (acc[u.role] ?? 0) + 1;
       return acc;
     }, {}),
-  ).map(([name, value]) => ({ name, value }));
+  ).map(([name, value]) => ({
+    name: roleLabel[name] ?? name,
+    value,
+  }));
 
   const bookingStatus = Object.entries(
     bookings.reduce<Record<string, number>>((acc, b) => {
       acc[b.status] = (acc[b.status] ?? 0) + 1;
       return acc;
     }, {}),
-  ).map(([name, value]) => ({ name, value }));
+  ).map(([name, value]) => ({
+    name: bookingStatusLabel[name] ?? name,
+    value,
+  }));
 
   return (
     <div>
       <PageHeader
-        title="Analytics"
-        description="Deeper performance views powered by live Zustand state."
+        title="التحليلات"
+        description="عرض أعمق لأداء المنصة اعتماداً على البيانات الحالية."
       />
       <div className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <DashboardCard title="Revenue" value={formatCurrency(revenue)} />
-        <DashboardCard title="Users" value={users.length} />
-        <DashboardCard title="Stores" value={stores.length} />
-        <DashboardCard title="Catalog size" value={dresses.length} />
+        <DashboardCard title="الإيرادات" value={formatCurrency(revenue)} />
+        <DashboardCard title="المستخدمون" value={users.length} />
+        <DashboardCard title="المحلات" value={stores.length} />
+        <DashboardCard title="حجم الكتالوج" value={dresses.length} />
       </div>
       <div className="grid gap-4 xl:grid-cols-2">
-        <ChartCard title="Revenue analytics">
+        <ChartCard title="تحليل الإيرادات">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={seedMonthlyStats}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e6e0ea" />
@@ -74,7 +81,7 @@ export default function AnalyticsPage() {
             </LineChart>
           </ResponsiveContainer>
         </ChartCard>
-        <ChartCard title="Booking analytics">
+        <ChartCard title="تحليل الحجوزات">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={bookingStatus}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e6e0ea" />
@@ -85,7 +92,7 @@ export default function AnalyticsPage() {
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
-        <ChartCard title="User analytics">
+        <ChartCard title="تحليل المستخدمين">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie data={rolePie} dataKey="value" nameKey="name" outerRadius={90} label>
@@ -97,7 +104,7 @@ export default function AnalyticsPage() {
             </PieChart>
           </ResponsiveContainer>
         </ChartCard>
-        <ChartCard title="Store analytics">
+        <ChartCard title="تحليل المحلات">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={stores.map((s) => ({

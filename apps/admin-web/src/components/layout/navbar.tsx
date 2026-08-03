@@ -21,14 +21,16 @@ export function Navbar({ onMenu }: { onMenu?: () => void }) {
           <Menu className="h-5 w-5" />
         </Button>
         <div>
-          <p className="text-sm font-medium">Welcome back</p>
-          <p className="text-xs text-muted-foreground">{name ?? "Administrator"}</p>
+          <p className="text-sm font-medium">مرحباً بعودتك</p>
+          <p className="text-xs text-muted-foreground">{name ?? "مسؤول"}</p>
         </div>
       </div>
       <div className="flex items-center gap-3">
-        <div className="hidden text-right sm:block">
+        <div className="hidden text-start sm:block">
           <p className="text-sm font-medium">{name}</p>
-          <p className="text-xs text-muted-foreground">{email}</p>
+          <p className="text-xs text-muted-foreground" dir="ltr">
+            {email}
+          </p>
         </div>
         <Button
           variant="outline"
@@ -39,7 +41,7 @@ export function Navbar({ onMenu }: { onMenu?: () => void }) {
           }}
         >
           <LogOut className="h-4 w-4" />
-          Logout
+          تسجيل الخروج
         </Button>
       </div>
     </header>

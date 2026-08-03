@@ -30,7 +30,10 @@ export const useAuthStore = create<AuthState>()(
           });
           return { ok: true };
         }
-        return { ok: false, error: "Invalid credentials. Use admin@diah.dz / admin123" };
+        return {
+          ok: false,
+          error: "بيانات الدخول غير صحيحة. استخدم admin@diah.dz / admin123",
+        };
       },
       logout: () => set({ isAuthenticated: false, email: null, name: null }),
     }),

@@ -37,8 +37,8 @@ export function Sidebar({ mobile = false }: { mobile?: boolean }) {
     <aside
       className={
         mobile
-          ? "flex h-full w-64 flex-col border-r border-border bg-card"
-          : "hidden w-64 shrink-0 border-r border-border bg-card lg:flex lg:flex-col"
+          ? "flex h-full w-64 flex-col border-e border-border bg-card"
+          : "hidden w-64 shrink-0 border-e border-border bg-card lg:flex lg:flex-col"
       }
     >
       <div className="flex h-16 items-center gap-3 border-b border-border px-6">
@@ -46,8 +46,8 @@ export function Sidebar({ mobile = false }: { mobile?: boolean }) {
           D
         </div>
         <div>
-          <p className="font-display text-xl font-semibold leading-none">Diah</p>
-          <p className="text-[11px] text-muted-foreground">Admin Console</p>
+          <p className="font-display text-xl font-semibold leading-none">دِياه</p>
+          <p className="text-[11px] text-muted-foreground">لوحة الإدارة</p>
         </div>
       </div>
       <nav className="flex-1 space-y-1 p-3">
@@ -73,7 +73,7 @@ export function Sidebar({ mobile = false }: { mobile?: boolean }) {
         })}
       </nav>
       <div className="border-t border-border p-4 text-xs text-muted-foreground">
-        Prototype · local state only
+        نموذج تجريبي · بيانات محلية فقط
       </div>
     </aside>
   );

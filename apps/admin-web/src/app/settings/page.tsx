@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { dressCategoryLabel } from "@/lib/labels";
 import { useSettingsStore } from "@/stores/settings-store";
 
 export default function SettingsPage() {
@@ -22,13 +23,13 @@ export default function SettingsPage() {
   return (
     <div>
       <PageHeader
-        title="Settings"
-        description="Configure marketplace categories, pricing rules, and alerts."
+        title="الإعدادات"
+        description="ضبط فئات السوق وقواعد التسعير والتنبيهات."
       />
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Categories</CardTitle>
+            <CardTitle className="text-lg">الفئات</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex flex-wrap gap-2">
@@ -37,9 +38,9 @@ export default function SettingsPage() {
                   key={c}
                   className="rounded-full bg-muted px-3 py-1 text-xs"
                   onClick={() => removeCategory(c)}
-                  title="Remove"
+                  title="إزالة"
                 >
-                  {c} ×
+                  {dressCategoryLabel[c] ?? c} ×
                 </button>
               ))}
             </div>
@@ -47,7 +48,7 @@ export default function SettingsPage() {
               <Input
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                placeholder="New category"
+                placeholder="فئة جديدة"
               />
               <Button
                 onClick={() => {
@@ -56,7 +57,7 @@ export default function SettingsPage() {
                   setCategory("");
                 }}
               >
-                Add
+                إضافة
               </Button>
             </div>
           </CardContent>
@@ -64,7 +65,7 @@ export default function SettingsPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Dress types</CardTitle>
+            <CardTitle className="text-lg">أنواع الفساتين</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex flex-wrap gap-2">
@@ -82,7 +83,7 @@ export default function SettingsPage() {
               <Input
                 value={dressType}
                 onChange={(e) => setDressType(e.target.value)}
-                placeholder="New dress type"
+                placeholder="نوع فستان جديد"
               />
               <Button
                 onClick={() => {
@@ -91,7 +92,7 @@ export default function SettingsPage() {
                   setDressType("");
                 }}
               >
-                Add
+                إضافة
               </Button>
             </div>
           </CardContent>
@@ -99,13 +100,14 @@ export default function SettingsPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Pricing rules</CardTitle>
+            <CardTitle className="text-lg">قواعد التسعير</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="space-y-1.5">
-              <Label>Commission (%)</Label>
+              <Label>العمولة (%)</Label>
               <Input
                 type="number"
+                dir="ltr"
                 value={settings.commissionPercent}
                 onChange={(e) =>
                   updateSettings({
@@ -115,9 +117,10 @@ export default function SettingsPage() {
               />
             </div>
             <div className="space-y-1.5">
-              <Label>Default deposit (%)</Label>
+              <Label>التأمين الافتراضي (%)</Label>
               <Input
                 type="number"
+                dir="ltr"
                 value={settings.defaultDepositPercent}
                 onChange={(e) =>
                   updateSettings({
@@ -127,8 +130,9 @@ export default function SettingsPage() {
               />
             </div>
             <div className="space-y-1.5">
-              <Label>Currency</Label>
+              <Label>العملة</Label>
               <Input
+                dir="ltr"
                 value={settings.currency}
                 onChange={(e) => updateSettings({ currency: e.target.value })}
               />
@@ -138,12 +142,13 @@ export default function SettingsPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Notification settings</CardTitle>
+            <CardTitle className="text-lg">إعدادات الإشعارات</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="space-y-1.5">
-              <Label>Support email</Label>
+              <Label>بريد الدعم</Label>
               <Input
+                dir="ltr"
                 value={settings.supportEmail}
                 onChange={(e) =>
                   updateSettings({ supportEmail: e.target.value })
@@ -152,9 +157,9 @@ export default function SettingsPage() {
             </div>
             {(
               [
-                ["notifyNewUsers", "Notify on new users"],
-                ["notifyNewStores", "Notify on new stores"],
-                ["notifyPendingDresses", "Notify on pending dresses"],
+                ["notifyNewUsers", "تنبيه عند مستخدمين جدد"],
+                ["notifyNewStores", "تنبيه عند محلات جديدة"],
+                ["notifyPendingDresses", "تنبيه عند فساتين قيد المراجعة"],
               ] as const
             ).map(([key, label]) => (
               <label key={key} className="flex items-center gap-2 text-sm">
@@ -172,10 +177,10 @@ export default function SettingsPage() {
                 setTimeout(() => setSaved(false), 1500);
               }}
             >
-              Save settings
+              حفظ الإعدادات
             </Button>
             {saved ? (
-              <p className="text-xs text-success">Settings saved locally</p>
+              <p className="text-xs text-success">تم الحفظ محلياً</p>
             ) : null}
           </CardContent>
         </Card>

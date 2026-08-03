@@ -156,8 +156,7 @@ class FakeAuthRepository implements AuthRepository {
           'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800',
       logo:
           'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=200',
-      coverImage:
-          'https://images.unsplash.com/photo-1519741497674-611481863552?w=1200',
+      coverImage: 'assets/images/wedding_dress.png',
       openingHours: '09:00 – 19:00',
       createdAt: now,
     );

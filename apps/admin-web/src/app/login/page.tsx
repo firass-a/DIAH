@@ -31,7 +31,7 @@ export default function LoginPage() {
   const onSubmit = (values: FormValues) => {
     const result = login(values.email, values.password);
     if (!result.ok) {
-      setError(result.error ?? "Login failed");
+      setError(result.error ?? "فشل تسجيل الدخول");
       return;
     }
     router.replace("/dashboard");
@@ -44,22 +44,28 @@ export default function LoginPage() {
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-lg font-bold text-white">
             D
           </div>
-          <CardTitle className="text-3xl">Diah Admin</CardTitle>
+          <CardTitle className="text-3xl">لوحة دِياه</CardTitle>
           <p className="text-sm text-muted-foreground">
-            Sign in to manage the marketplace platform
+            سجّل الدخول لإدارة منصة السوق
           </p>
         </CardHeader>
         <CardContent>
           <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" {...form.register("email")} />
+              <Label htmlFor="email">البريد الإلكتروني</Label>
+              <Input
+                id="email"
+                type="email"
+                dir="ltr"
+                {...form.register("email")}
+              />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">كلمة المرور</Label>
               <Input
                 id="password"
                 type="password"
+                dir="ltr"
                 {...form.register("password")}
               />
             </div>
@@ -67,10 +73,10 @@ export default function LoginPage() {
               <p className="text-sm text-destructive">{error}</p>
             ) : null}
             <Button type="submit" className="w-full">
-              Login
+              تسجيل الدخول
             </Button>
-            <p className="text-center text-xs text-muted-foreground">
-              Demo: {ADMIN_DEMO.email} / {ADMIN_DEMO.password}
+            <p className="text-center text-xs text-muted-foreground" dir="ltr">
+              تجريبي: {ADMIN_DEMO.email} / {ADMIN_DEMO.password}
             </p>
           </form>
         </CardContent>

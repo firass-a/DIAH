@@ -9,20 +9,20 @@ export const BRAND = {
 export const ADMIN_DEMO = {
   email: "admin@diah.dz",
   password: "admin123",
-  name: "Diah Admin",
+  name: "مسؤول دِياه",
 } as const;
 
 export const NAV_ITEMS = [
-  { href: "/dashboard", label: "Dashboard", icon: "LayoutDashboard" },
-  { href: "/users", label: "Users", icon: "Users" },
-  { href: "/stores", label: "Stores", icon: "Store" },
-  { href: "/dresses", label: "Dresses", icon: "Shirt" },
-  { href: "/bookings", label: "Bookings", icon: "CalendarDays" },
-  { href: "/transactions", label: "Transactions", icon: "Wallet" },
-  { href: "/subscriptions", label: "Subscriptions", icon: "CreditCard" },
-  { href: "/analytics", label: "Analytics", icon: "BarChart3" },
-  { href: "/notifications", label: "Notifications", icon: "Bell" },
-  { href: "/settings", label: "Settings", icon: "Settings" },
+  { href: "/dashboard", label: "لوحة التحكم", icon: "LayoutDashboard" },
+  { href: "/users", label: "المستخدمون", icon: "Users" },
+  { href: "/stores", label: "المحلات", icon: "Store" },
+  { href: "/dresses", label: "الفساتين", icon: "Shirt" },
+  { href: "/bookings", label: "الحجوزات", icon: "CalendarDays" },
+  { href: "/transactions", label: "المعاملات", icon: "Wallet" },
+  { href: "/subscriptions", label: "الاشتراكات", icon: "CreditCard" },
+  { href: "/analytics", label: "التحليلات", icon: "BarChart3" },
+  { href: "/notifications", label: "الإشعارات", icon: "Bell" },
+  { href: "/settings", label: "الإعدادات", icon: "Settings" },
 ] as const;
 
 export const DRESS_CATEGORIES = [
@@ -35,7 +35,7 @@ export const DRESS_CATEGORIES = [
 ] as const;
 
 export const SUBSCRIPTION_PLANS = [
-  { id: "monthly", name: "Monthly", price: 9000 },
-  { id: "yearly", name: "Yearly", price: 90000 },
-  { id: "trial", name: "Trial", price: 0 },
+  { id: "monthly", name: "شهري", price: 9000 },
+  { id: "yearly", name: "سنوي", price: 90000 },
+  { id: "trial", name: "تجريبي", price: 0 },
 ] as const;

@@ -4,6 +4,15 @@ import { Search } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import {
+  dressCategoryLabel,
+  notificationTargetLabel,
+  planLabel,
+  roleLabel,
+  statusLabel,
+  storeCategoryLabel,
+  transactionTypeLabel,
+} from "@/lib/labels";
 import { cn } from "@/lib/utils";
 
 export function DashboardCard({
@@ -28,7 +37,9 @@ export function DashboardCard({
         ) : null}
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-semibold tracking-tight">{value}</div>
+        <div className="text-2xl font-semibold tracking-tight" dir="ltr">
+          {value}
+        </div>
         {hint ? (
           <p className="mt-1 text-xs text-muted-foreground">{hint}</p>
         ) : null}
@@ -40,7 +51,7 @@ export function DashboardCard({
 export function SearchInput({
   value,
   onChange,
-  placeholder = "Search…",
+  placeholder = "بحث…",
   className,
 }: {
   value: string;
@@ -50,14 +61,27 @@ export function SearchInput({
 }) {
   return (
     <div className={cn("relative", className)}>
-      <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+      <Search className="absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
       <Input
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="pl-9"
+        className="ps-9"
       />
     </div>
+  );
+}
+
+function displayStatus(status: string) {
+  return (
+    statusLabel[status] ??
+    roleLabel[status] ??
+    planLabel[status] ??
+    transactionTypeLabel[status] ??
+    notificationTargetLabel[status] ??
+    storeCategoryLabel[status] ??
+    dressCategoryLabel[status] ??
+    status
   );
 }
 
@@ -81,7 +105,7 @@ export function StatusBadge({ status }: { status: string }) {
             ? "default"
             : "primary";
 
-  return <Badge variant={variant}>{status}</Badge>;
+  return <Badge variant={variant}>{displayStatus(status)}</Badge>;
 }
 
 export function EmptyState({

@@ -290,7 +290,7 @@ class _StoreOnboardingScreenState extends ConsumerState<StoreOnboardingScreen> {
                           label,
                           style: TextStyle(
                             fontWeight:
-                                selected ? FontWeight.w700 : FontWeight.w500,
+                                selected ? FontWeight.w800 : FontWeight.w700,
                           ),
                         ),
                       ),

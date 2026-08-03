@@ -35,13 +35,13 @@ export default function NotificationsPage() {
   return (
     <div>
       <PageHeader
-        title="Notifications"
-        description="Broadcast platform messages to user segments."
+        title="الإشعارات"
+        description="إرسال رسائل المنصة إلى شرائح المستخدمين."
       />
       <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Create notification</CardTitle>
+            <CardTitle className="text-lg">إنشاء إشعار</CardTitle>
           </CardHeader>
           <CardContent>
             <form
@@ -58,33 +58,33 @@ export default function NotificationsPage() {
               })}
             >
               <div className="space-y-1.5">
-                <Label>Title</Label>
+                <Label>العنوان</Label>
                 <Input {...form.register("title")} />
               </div>
               <div className="space-y-1.5">
-                <Label>Message</Label>
+                <Label>الرسالة</Label>
                 <textarea
                   className="min-h-24 w-full rounded-md border border-border bg-card px-3 py-2 text-sm"
                   {...form.register("message")}
                 />
               </div>
               <div className="space-y-1.5">
-                <Label>Target</Label>
+                <Label>الجمهور</Label>
                 <select
                   className="h-10 w-full rounded-md border border-border bg-card px-3 text-sm"
                   {...form.register("target")}
                 >
-                  <option value="all">All</option>
-                  <option value="customers">Customers</option>
-                  <option value="owners">Owners</option>
-                  <option value="stores">Stores</option>
+                  <option value="all">الجميع</option>
+                  <option value="customers">الزبائن</option>
+                  <option value="owners">المؤجّرون</option>
+                  <option value="stores">المحلات</option>
                 </select>
               </div>
               <Button type="submit" className="w-full">
-                Send notification
+                إرسال الإشعار
               </Button>
               {ok ? (
-                <p className="text-center text-xs text-success">Created</p>
+                <p className="text-center text-xs text-success">تم الإنشاء</p>
               ) : null}
             </form>
           </CardContent>
@@ -109,7 +109,7 @@ export default function NotificationsPage() {
                   variant="destructive"
                   onClick={() => deleteNotification(n.id)}
                 >
-                  Delete
+                  حذف
                 </Button>
               </CardContent>
             </Card>

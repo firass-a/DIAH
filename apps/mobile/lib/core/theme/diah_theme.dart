@@ -23,6 +23,28 @@ class DiahColors {
 class DiahTheme {
   DiahTheme._();
 
+  /// Apply a heavier weight across a text theme (keeps size/color).
+  static TextTheme _thicken(TextTheme theme, FontWeight weight) {
+    TextStyle? bump(TextStyle? s) => s?.copyWith(fontWeight: weight);
+    return theme.copyWith(
+      displayLarge: bump(theme.displayLarge),
+      displayMedium: bump(theme.displayMedium),
+      displaySmall: bump(theme.displaySmall),
+      headlineLarge: bump(theme.headlineLarge),
+      headlineMedium: bump(theme.headlineMedium),
+      headlineSmall: bump(theme.headlineSmall),
+      titleLarge: bump(theme.titleLarge),
+      titleMedium: bump(theme.titleMedium),
+      titleSmall: bump(theme.titleSmall),
+      bodyLarge: bump(theme.bodyLarge),
+      bodyMedium: bump(theme.bodyMedium),
+      bodySmall: bump(theme.bodySmall),
+      labelLarge: bump(theme.labelLarge),
+      labelMedium: bump(theme.labelMedium),
+      labelSmall: bump(theme.labelSmall),
+    );
+  }
+
   static ThemeData get light {
     final base = ThemeData(
       useMaterial3: true,
@@ -38,51 +60,82 @@ class DiahTheme {
       scaffoldBackgroundColor: DiahColors.background,
     );
 
-    final display = GoogleFonts.cormorantGaramondTextTheme(base.textTheme);
-    final body = GoogleFonts.dmSansTextTheme(base.textTheme);
+    final display = _thicken(
+      GoogleFonts.cormorantGaramondTextTheme(base.textTheme),
+      FontWeight.w700,
+    );
+    final body = _thicken(
+      GoogleFonts.dmSansTextTheme(base.textTheme),
+      FontWeight.w600,
+    );
 
     return base.copyWith(
       textTheme: body.copyWith(
         displayLarge: display.displayLarge?.copyWith(
           color: DiahColors.text,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w800,
           letterSpacing: -0.5,
         ),
         displayMedium: display.displayMedium?.copyWith(
           color: DiahColors.text,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w800,
         ),
         displaySmall: display.displaySmall?.copyWith(
           color: DiahColors.text,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w700,
         ),
         headlineLarge: display.headlineLarge?.copyWith(
           color: DiahColors.text,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w800,
         ),
         headlineMedium: display.headlineMedium?.copyWith(
           color: DiahColors.text,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w700,
         ),
         headlineSmall: display.headlineSmall?.copyWith(
           color: DiahColors.text,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w700,
         ),
         titleLarge: body.titleLarge?.copyWith(
           color: DiahColors.text,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w700,
         ),
         titleMedium: body.titleMedium?.copyWith(
           color: DiahColors.text,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w700,
         ),
-        bodyLarge: body.bodyLarge?.copyWith(color: DiahColors.text),
-        bodyMedium: body.bodyMedium?.copyWith(color: DiahColors.textSecondary),
-        bodySmall: body.bodySmall?.copyWith(color: DiahColors.textMuted),
-        labelLarge: body.labelLarge?.copyWith(
+        titleSmall: body.titleSmall?.copyWith(
+          color: DiahColors.text,
+          fontWeight: FontWeight.w700,
+        ),
+        bodyLarge: body.bodyLarge?.copyWith(
           color: DiahColors.text,
           fontWeight: FontWeight.w600,
         ),
+        bodyMedium: body.bodyMedium?.copyWith(
+          color: DiahColors.textSecondary,
+          fontWeight: FontWeight.w600,
+        ),
+        bodySmall: body.bodySmall?.copyWith(
+          color: DiahColors.textMuted,
+          fontWeight: FontWeight.w600,
+        ),
+        labelLarge: body.labelLarge?.copyWith(
+          color: DiahColors.text,
+          fontWeight: FontWeight.w700,
+        ),
+        labelMedium: body.labelMedium?.copyWith(
+          color: DiahColors.text,
+          fontWeight: FontWeight.w700,
+        ),
+        labelSmall: body.labelSmall?.copyWith(
+          color: DiahColors.textMuted,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      primaryTextTheme: _thicken(
+        GoogleFonts.dmSansTextTheme(base.primaryTextTheme),
+        FontWeight.w700,
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: DiahColors.background,
@@ -92,6 +145,10 @@ class DiahTheme {
         centerTitle: true,
         titleTextStyle: GoogleFonts.cormorantGaramond(
           fontSize: 24,
+          fontWeight: FontWeight.w800,
+          color: DiahColors.text,
+        ),
+        toolbarTextStyle: GoogleFonts.dmSans(
           fontWeight: FontWeight.w600,
           color: DiahColors.text,
         ),
@@ -113,7 +170,23 @@ class DiahTheme {
           ),
           textStyle: GoogleFonts.dmSans(
             fontSize: 15,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          textStyle: GoogleFonts.dmSans(
+            fontSize: 15,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          textStyle: GoogleFonts.dmSans(
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ),
@@ -127,7 +200,7 @@ class DiahTheme {
           ),
           textStyle: GoogleFonts.dmSans(
             fontSize: 15,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w800,
           ),
         ),
       ),
@@ -150,30 +223,96 @@ class DiahTheme {
           borderRadius: BorderRadius.circular(16),
           borderSide: const BorderSide(color: DiahColors.primary, width: 1.5),
         ),
-        hintStyle: GoogleFonts.dmSans(color: DiahColors.textMuted),
+        labelStyle: GoogleFonts.dmSans(
+          fontWeight: FontWeight.w600,
+          color: DiahColors.textSecondary,
+        ),
+        floatingLabelStyle: GoogleFonts.dmSans(
+          fontWeight: FontWeight.w700,
+          color: DiahColors.primary,
+        ),
+        hintStyle: GoogleFonts.dmSans(
+          color: DiahColors.textMuted,
+          fontWeight: FontWeight.w600,
+        ),
       ),
       chipTheme: ChipThemeData(
         backgroundColor: DiahColors.softLavender,
         selectedColor: DiahColors.primary,
-        labelStyle: GoogleFonts.dmSans(fontSize: 13),
+        labelStyle: GoogleFonts.dmSans(
+          fontSize: 13,
+          fontWeight: FontWeight.w700,
+        ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         side: BorderSide.none,
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       ),
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      listTileTheme: ListTileThemeData(
+        titleTextStyle: GoogleFonts.dmSans(
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+          color: DiahColors.text,
+        ),
+        subtitleTextStyle: GoogleFonts.dmSans(
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
+          color: DiahColors.textMuted,
+        ),
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          final selected = states.contains(WidgetState.selected);
+          return GoogleFonts.dmSans(
+            fontSize: 12,
+            fontWeight: selected ? FontWeight.w800 : FontWeight.w700,
+          );
+        }),
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: DiahColors.card,
         selectedItemColor: DiahColors.primary,
         unselectedItemColor: DiahColors.textMuted,
         type: BottomNavigationBarType.fixed,
         elevation: 8,
+        selectedLabelStyle: GoogleFonts.dmSans(
+          fontSize: 12,
+          fontWeight: FontWeight.w800,
+        ),
+        unselectedLabelStyle: GoogleFonts.dmSans(
+          fontSize: 12,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+      tabBarTheme: TabBarThemeData(
+        labelStyle: GoogleFonts.dmSans(fontWeight: FontWeight.w800),
+        unselectedLabelStyle: GoogleFonts.dmSans(fontWeight: FontWeight.w700),
       ),
       dividerTheme: const DividerThemeData(
         color: DiahColors.border,
         thickness: 1,
       ),
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: DiahColors.primary,
         foregroundColor: Colors.white,
+        extendedTextStyle: GoogleFonts.dmSans(fontWeight: FontWeight.w800),
+      ),
+      snackBarTheme: SnackBarThemeData(
+        contentTextStyle: GoogleFonts.dmSans(
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+        ),
+      ),
+      dialogTheme: DialogThemeData(
+        titleTextStyle: GoogleFonts.cormorantGaramond(
+          fontSize: 22,
+          fontWeight: FontWeight.w800,
+          color: DiahColors.text,
+        ),
+        contentTextStyle: GoogleFonts.dmSans(
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+          color: DiahColors.textSecondary,
+        ),
       ),
     );
   }

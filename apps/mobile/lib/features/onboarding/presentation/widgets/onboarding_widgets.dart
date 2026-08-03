@@ -205,7 +205,7 @@ class MultiSelectChip extends StatelessWidget {
       checkmarkColor: DiahColors.primary,
       labelStyle: TextStyle(
         color: selected ? DiahColors.primary : DiahColors.text,
-        fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+        fontWeight: selected ? FontWeight.w800 : FontWeight.w600,
       ),
       side: BorderSide(
         color: selected ? DiahColors.primary : DiahColors.border,

@@ -6,6 +6,7 @@ import { PageHeader, StatusBadge } from "@/components/shared";
 import { DataTable } from "@/components/tables/data-table";
 import { Button } from "@/components/ui/button";
 import { SUBSCRIPTION_PLANS } from "@/lib/constants";
+import { labelOf, planLabel } from "@/lib/labels";
 import { formatCurrency } from "@/lib/utils";
 import { useStoreStore } from "@/stores/store-store";
 import { useSubscriptionStore } from "@/stores/subscription-store";
@@ -21,26 +22,40 @@ export default function SubscriptionsPage() {
     () => [
       {
         id: "store",
-        header: "Store",
+        header: "المحل",
         cell: ({ row }) =>
           stores.find((s) => s.id === row.original.storeId)?.name ?? "—",
       },
-      { accessorKey: "plan", header: "Plan" },
+      {
+        accessorKey: "plan",
+        header: "الخطة",
+        cell: ({ row }) => labelOf(planLabel, row.original.plan),
+      },
       {
         accessorKey: "price",
-        header: "Price",
-        cell: ({ row }) => formatCurrency(row.original.price),
+        header: "السعر",
+        cell: ({ row }) => (
+          <span dir="ltr">{formatCurrency(row.original.price)}</span>
+        ),
       },
-      { accessorKey: "startDate", header: "Start" },
-      { accessorKey: "endDate", header: "End" },
+      {
+        accessorKey: "startDate",
+        header: "البداية",
+        cell: ({ row }) => <span dir="ltr">{row.original.startDate}</span>,
+      },
+      {
+        accessorKey: "endDate",
+        header: "النهاية",
+        cell: ({ row }) => <span dir="ltr">{row.original.endDate}</span>,
+      },
       {
         accessorKey: "status",
-        header: "Status",
+        header: "الحالة",
         cell: ({ row }) => <StatusBadge status={row.original.status} />,
       },
       {
         id: "actions",
-        header: "Actions",
+        header: "إجراءات",
         cell: ({ row }) => (
           <div className="flex flex-wrap gap-1">
             <Button
@@ -48,17 +63,17 @@ export default function SubscriptionsPage() {
               variant="outline"
               onClick={() => setStatus(row.original.id, "active")}
             >
-              Activate
+              تفعيل
             </Button>
             <Button
               size="sm"
               variant="secondary"
               onClick={() => setStatus(row.original.id, "cancelled")}
             >
-              Disable
+              تعطيل
             </Button>
             <Button size="sm" onClick={() => renew(row.original.id)}>
-              Renew
+              تجديد
             </Button>
           </div>
         ),
@@ -70,8 +85,8 @@ export default function SubscriptionsPage() {
   return (
     <div>
       <PageHeader
-        title="Subscriptions"
-        description="Store plans, renewals, and billing status."
+        title="الاشتراكات"
+        description="خطط المحلات والتجديدات وحالة الفوترة."
       />
       <div className="mb-6 grid gap-3 sm:grid-cols-3">
         {SUBSCRIPTION_PLANS.map((p) => (
@@ -81,12 +96,12 @@ export default function SubscriptionsPage() {
           >
             <p className="font-display text-xl font-semibold">{p.name}</p>
             <p className="text-sm text-muted-foreground">
-              {formatCurrency(p.price)}
+              <span dir="ltr">{formatCurrency(p.price)}</span>
               {p.id === "monthly"
-                ? " / month"
+                ? " / شهر"
                 : p.id === "yearly"
-                  ? " / year"
-                  : " trial"}
+                  ? " / سنة"
+                  : " تجريبي"}
             </p>
           </div>
         ))}
@@ -94,7 +109,7 @@ export default function SubscriptionsPage() {
       <DataTable
         columns={columns}
         data={subscriptions}
-        searchPlaceholder="Search subscriptions…"
+        searchPlaceholder="ابحث في الاشتراكات…"
         globalFilterFn={(row, q) =>
           [row.plan, row.status, row.storeId].join(" ").toLowerCase().includes(q)
         }

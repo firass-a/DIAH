@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -8,6 +7,7 @@ import '../../../../core/fake_backend/store_providers.dart';
 import '../../../../core/localization/app_strings.dart';
 import '../../../../core/theme/diah_theme.dart';
 import '../../../../core/widgets/diah_widgets.dart';
+import '../../../../core/widgets/dress_image.dart';
 import '../../../../shared/enums/app_enums.dart';
 import '../widgets/store_widgets.dart';
 import 'store_shell.dart';
@@ -51,28 +51,24 @@ class StoreOverviewScreen extends ConsumerWidget {
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(20),
                   ),
-                  child: CachedNetworkImage(
-                    imageUrl: store.coverImage ?? store.imageUrl ?? '',
+                  child: DressImage(
+                    source: store.coverImage ?? store.imageUrl ?? '',
                     height: 120,
                     width: double.infinity,
                     fit: BoxFit.cover,
-                    errorWidget: (_, _, _) => Container(
-                      height: 120,
-                      color: DiahColors.softLavender,
-                    ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(14),
                   child: Row(
                     children: [
-                      CircleAvatar(
-                        radius: 28,
-                        backgroundImage: NetworkImage(
-                          store.logo ?? store.imageUrl ?? '',
+                      ClipOval(
+                        child: DressImage(
+                          source: store.logo ?? store.imageUrl ?? '',
+                          width: 56,
+                          height: 56,
+                          fit: BoxFit.cover,
                         ),
-                        onBackgroundImageError: (_, _) {},
-                        backgroundColor: DiahColors.softLavender,
                       ),
                       const SizedBox(width: 12),
                       Expanded(

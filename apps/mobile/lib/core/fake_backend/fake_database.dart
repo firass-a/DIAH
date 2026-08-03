@@ -223,12 +223,9 @@ class FakeDatabase extends ChangeNotifier {
         type: StoreType.wedding,
         description:
             'محل راقٍ متخصص في فساتين الزفاف الفاخرة، بخدمة شخصية وتصاميم حصرية.',
-        imageUrl:
-            'https://images.unsplash.com/photo-1519741497674-611481863552?w=800',
-        logo:
-            'https://images.unsplash.com/photo-1519741497674-611481863552?w=200',
-        coverImage:
-            'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=1200',
+        imageUrl: 'assets/images/wedding_dress.png',
+        logo: 'assets/images/wedding_dress.png',
+        coverImage: 'assets/images/wedding_dress.png',
         phone: '0777111222',
         dressIds: ['dress-1', 'dress-2', 'dress-4', 'dress-6', 'dress-9', 'dress-10'],
         showBrandName: true,
@@ -250,12 +247,9 @@ class FakeDatabase extends ChangeNotifier {
         city: 'الجزائر العاصمة',
         type: StoreType.traditional,
         description: 'تصاميم تقليدية جزائرية أصيلة مع لمسة عصرية.',
-        imageUrl:
-            'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800',
-        logo:
-            'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=200',
-        coverImage:
-            'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=1200',
+        imageUrl: 'assets/images/karakou.png',
+        logo: 'assets/images/karakou.png',
+        coverImage: 'assets/images/karakou.png',
         phone: '0555987654',
         dressIds: ['dress-7', 'dress-8'],
         showBrandName: false,
@@ -306,9 +300,9 @@ class FakeDatabase extends ChangeNotifier {
         description:
             'فستان زفاف أبيض ملكي بتطريز يدوي فاخر وذيل طويل أنيق. مثالي لحفلات الزفاف الكبرى في قاعات الجزائر الفاخرة.',
         images: const [
-          'https://images.unsplash.com/photo-1594552072239-b1f8c8d51e54?w=800',
-          'https://images.unsplash.com/photo-1515372039744-b8f0229a06a2?w=800',
-          'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800',
+          'assets/images/wedding_dress.png',
+          'assets/images/wedding_dress.png',
+          'assets/images/wedding_dress.png',
         ],
         category: DressCategory.wedding,
         occasion: DressOccasion.wedding,
@@ -330,8 +324,8 @@ class FakeDatabase extends ChangeNotifier {
         description:
             'فستان سهرة ساتان فاخر بلون شمبانيا، قصة انسيابية تبرز الأناقة الطبيعية.',
         images: const [
-          'https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800',
-          'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=800',
+          'https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800&q=80',
+          'https://images.unsplash.com/photo-1769883204270-909b63437a30?w=800&q=80',
         ],
         category: DressCategory.evening,
         occasion: DressOccasion.soiree,
@@ -352,8 +346,8 @@ class FakeDatabase extends ChangeNotifier {
         description:
             'قفطان زمردي بتطريز ذهبي تقليدي، قطعة فريدة من مجموعة خاصة.',
         images: const [
-          'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800',
-          'https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=800',
+          'https://images.unsplash.com/photo-1765229280390-e05fb240aed8?w=800&q=80',
+          'https://images.unsplash.com/photo-1765229276545-c23adb5442bf?w=800&q=80',
         ],
         category: DressCategory.traditional,
         occasion: DressOccasion.traditionalCeremony,
@@ -374,8 +368,8 @@ class FakeDatabase extends ChangeNotifier {
         description:
             'فستان مخملي بلون بورغندي غني، مثالي لحفلات الخطوبة والسهرات الشتوية.',
         images: const [
-          'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800',
-          'https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=800',
+          'https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=800&q=80',
+          'https://images.unsplash.com/photo-1568252542512-9fe8fe9c87bb?w=800&q=80',
         ],
         category: DressCategory.evening,
         occasion: DressOccasion.engagement,
@@ -396,8 +390,7 @@ class FakeDatabase extends ChangeNotifier {
         description:
             'كاراكو جزائري أصيل بتطريز فتلة ذهبية وفضية، إرث ثقافي بلمسة معاصرة.',
         images: const [
-          'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800',
-          'https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=800',
+          'assets/images/karakou.png',
         ],
         category: DressCategory.traditional,
         occasion: DressOccasion.traditionalCeremony,
@@ -418,8 +411,8 @@ class FakeDatabase extends ChangeNotifier {
         description:
             'فستان وردي ناعم بطبقات تول خفيفة، مثالي لحفلات الخطوبة والتصوير.',
         images: const [
-          'https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800',
-          'https://images.unsplash.com/photo-1515372039744-b8f0229a06a2?w=800',
+          'assets/images/wedding_dress.png',
+          'assets/images/wedding_dress.png',
         ],
         category: DressCategory.wedding,
         occasion: DressOccasion.engagement,
@@ -440,8 +433,8 @@ class FakeDatabase extends ChangeNotifier {
         description:
             'بلوزة وهرانية ذهبية بتطريز تقليدي من وهران، قطعة تراثية نادرة.',
         images: const [
-          'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800',
-          'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800',
+          'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=800&q=80',
+          'https://images.unsplash.com/photo-1547697933-66bcb20f114a?w=800&q=80',
         ],
         category: DressCategory.traditional,
         occasion: DressOccasion.traditionalCeremony,
@@ -462,8 +455,8 @@ class FakeDatabase extends ChangeNotifier {
         description:
             'فستان سهرة كحلي ليلي مع تفاصيل كريستالية، أناقة لا تقاوم.',
         images: const [
-          'https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=800',
-          'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800',
+          'https://images.unsplash.com/photo-1568251188392-ae32f898cb3b?w=800&q=80',
+          'https://images.unsplash.com/photo-1769883204270-909b63437a30?w=800&q=80',
         ],
         category: DressCategory.evening,
         occasion: DressOccasion.soiree,
@@ -480,14 +473,15 @@ class FakeDatabase extends ChangeNotifier {
       ),
       Dress(
         id: 'dress-9',
-        name: 'Pearl Crystal Clutch',
-        description: 'حقيبة يد كريستالية بلؤلؤ صناعي، إكسسوار فاخر للمناسبات.',
+        name: 'Vintage Utility Handbag',
+        description:
+            'حقيبة يد بنية متعددة الجيوب بلمسة كلاسيكية، مثالية لإكمال إطلالة السهرة أو النهار.',
         images: const [
-          'https://images.unsplash.com/photo-1584917865442-de89df76acc0?w=800',
+          'assets/images/accessory_purse_1.png',
         ],
         category: DressCategory.accessories,
-        occasion: DressOccasion.wedding,
-        color: 'فضي',
+        occasion: DressOccasion.soiree,
+        color: 'بني',
         sizes: const ['One Size'],
         pricePerDay: 600,
         deposit: 3000,
@@ -500,14 +494,15 @@ class FakeDatabase extends ChangeNotifier {
       ),
       Dress(
         id: 'dress-10',
-        name: 'Ivory Lace Veil',
-        description: 'طرحة عروس دانتيل عاجي فاخرة بطول كاتدرائية.',
+        name: 'Classic Brown Tote',
+        description:
+            'حقيبة كتف بنية أنيقة بإغلاق مغناطيسي وتفاصيل ذهبية، إكسسوار عملي وراقي.',
         images: const [
-          'https://images.unsplash.com/photo-1519741497674-611481863552?w=800',
+          'assets/images/accessory_purse_2.png',
         ],
         category: DressCategory.accessories,
-        occasion: DressOccasion.wedding,
-        color: 'عاجي',
+        occasion: DressOccasion.engagement,
+        color: 'بني',
         sizes: const ['One Size'],
         pricePerDay: 700,
         deposit: 4000,

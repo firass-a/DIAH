@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -166,7 +165,7 @@ class PriceWidget extends ConsumerWidget {
                 style: TextStyle(
                   fontSize: large ? 14 : 12,
                   color: DiahColors.textMuted,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
           ],
@@ -236,7 +235,7 @@ class DiahFilterChip extends StatelessWidget {
       selectedColor: DiahColors.primary,
       labelStyle: TextStyle(
         color: selected ? Colors.white : DiahColors.text,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w700,
         fontSize: 13,
       ),
       checkmarkColor: Colors.white,
@@ -252,10 +251,15 @@ class DressCard extends ConsumerWidget {
     super.key,
     required this.dress,
     this.width = 180,
+    /// Unique scope so the same dress can appear in multiple lists safely.
+    this.heroScope = 'card',
   });
 
   final Dress dress;
   final double width;
+  final String heroScope;
+
+  String get heroTag => 'dress-$heroScope-${dress.id}';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -265,7 +269,7 @@ class DressCard extends ConsumerWidget {
     return SizedBox(
       width: width,
       child: GestureDetector(
-        onTap: () => context.push('/dress/${dress.id}'),
+        onTap: () => context.push('/dress/${dress.id}', extra: heroTag),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -273,7 +277,7 @@ class DressCard extends ConsumerWidget {
               child: Stack(
                 children: [
                   Hero(
-                    tag: 'dress-${dress.id}',
+                    tag: heroTag,
                     child: DressImage(
                       source: dress.images.isNotEmpty ? dress.images.first : '',
                       width: width,
@@ -365,16 +369,11 @@ class StoreCard extends ConsumerWidget {
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(20),
               ),
-              child: CachedNetworkImage(
-                imageUrl: store.imageUrl ?? '',
+              child: DressImage(
+                source: store.imageUrl ?? '',
                 height: 110,
                 width: 200,
                 fit: BoxFit.cover,
-                errorWidget: (_, _, _) => Container(
-                  height: 110,
-                  color: DiahColors.softLavender,
-                  child: const Icon(Icons.storefront, color: DiahColors.accent),
-                ),
               ),
             ),
             Padding(

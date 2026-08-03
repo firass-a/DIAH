@@ -5,6 +5,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { PageHeader, StatusBadge } from "@/components/shared";
 import { DataTable } from "@/components/tables/data-table";
 import { Button } from "@/components/ui/button";
+import { labelOf, transactionTypeLabel } from "@/lib/labels";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { useTransactionStore } from "@/stores/transaction-store";
 import { useUserStore } from "@/stores/user-store";
@@ -18,37 +19,50 @@ export default function TransactionsPage() {
 
   const columns = useMemo<ColumnDef<Transaction>[]>(
     () => [
-      { accessorKey: "id", header: "ID" },
+      {
+        accessorKey: "id",
+        header: "المعرّف",
+        cell: ({ row }) => <span dir="ltr">{row.original.id}</span>,
+      },
       {
         accessorKey: "bookingId",
-        header: "Booking",
-        cell: ({ row }) => row.original.bookingId ?? "—",
+        header: "الحجز",
+        cell: ({ row }) => (
+          <span dir="ltr">{row.original.bookingId ?? "—"}</span>
+        ),
       },
       {
         id: "customer",
-        header: "Customer",
+        header: "الزبون",
         cell: ({ row }) =>
           users.find((u) => u.id === row.original.customerId)?.name ?? "—",
       },
       {
         accessorKey: "amount",
-        header: "Amount",
-        cell: ({ row }) => formatCurrency(row.original.amount),
+        header: "المبلغ",
+        cell: ({ row }) => (
+          <span dir="ltr">{formatCurrency(row.original.amount)}</span>
+        ),
       },
-      { accessorKey: "type", header: "Type" },
+      {
+        accessorKey: "type",
+        header: "النوع",
+        cell: ({ row }) =>
+          labelOf(transactionTypeLabel, row.original.type),
+      },
       {
         accessorKey: "date",
-        header: "Date",
+        header: "التاريخ",
         cell: ({ row }) => formatDate(row.original.date),
       },
       {
         accessorKey: "status",
-        header: "Status",
+        header: "الحالة",
         cell: ({ row }) => <StatusBadge status={row.original.status} />,
       },
       {
         id: "actions",
-        header: "Actions",
+        header: "إجراءات",
         cell: ({ row }) => (
           <div className="flex flex-wrap gap-1">
             <Button
@@ -56,7 +70,7 @@ export default function TransactionsPage() {
               variant="outline"
               onClick={() => updateStatus(row.original.id, "completed")}
             >
-              Complete
+              إتمام
             </Button>
             <Button
               size="sm"
@@ -64,7 +78,7 @@ export default function TransactionsPage() {
               onClick={() => refund(row.original.id)}
               disabled={row.original.status === "refunded"}
             >
-              Refund
+              استرجاع
             </Button>
           </div>
         ),
@@ -76,13 +90,13 @@ export default function TransactionsPage() {
   return (
     <div>
       <PageHeader
-        title="Transactions"
-        description="Monitor deposits, rentals, commissions, and refunds."
+        title="المعاملات"
+        description="متابعة التأمينات والإيجارات والعمولات والاسترجاعات."
       />
       <DataTable
         columns={columns}
         data={transactions}
-        searchPlaceholder="Search transactions…"
+        searchPlaceholder="ابحث في المعاملات…"
         globalFilterFn={(row, q) =>
           [row.id, row.type, row.status, row.description, row.bookingId]
             .join(" ")

@@ -49,9 +49,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           <button
             className="absolute inset-0 bg-black/30"
             onClick={() => setMobileOpen(false)}
-            aria-label="Close menu"
+            aria-label="إغلاق القائمة"
           />
-          <div className="absolute inset-y-0 left-0 w-64 bg-card shadow-xl">
+          <div className="absolute inset-y-0 start-0 w-64 bg-card shadow-xl">
             <Sidebar mobile />
           </div>
         </div>

@@ -156,7 +156,7 @@ class StoreAppBar extends ConsumerWidget implements PreferredSizeWidget {
               style: const TextStyle(
                 fontSize: 11,
                 color: DiahColors.textMuted,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w600,
               ),
             ),
         ],

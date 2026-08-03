@@ -12,6 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { dressCategoryLabel, labelOf } from "@/lib/labels";
 import { formatCurrency } from "@/lib/utils";
 import { useDressStore } from "@/stores/dress-store";
 import { useStoreStore } from "@/stores/store-store";
@@ -41,7 +42,7 @@ export default function DressesPage() {
     () => [
       {
         id: "image",
-        header: "Image",
+        header: "الصورة",
         cell: ({ row }) => (
           <Image
             src={row.original.images[0] ?? ""}
@@ -53,57 +54,64 @@ export default function DressesPage() {
           />
         ),
       },
-      { accessorKey: "name", header: "Name" },
+      { accessorKey: "name", header: "الاسم" },
       {
         id: "owner",
-        header: "Owner",
+        header: "المالك",
         cell: ({ row }) =>
           users.find((u) => u.id === row.original.ownerId)?.name ?? "—",
       },
       {
         id: "store",
-        header: "Store",
+        header: "المحل",
         cell: ({ row }) =>
-          stores.find((s) => s.id === row.original.storeId)?.name ?? "Personal",
+          stores.find((s) => s.id === row.original.storeId)?.name ?? "شخصي",
       },
-      { accessorKey: "category", header: "Category" },
+      {
+        accessorKey: "category",
+        header: "الفئة",
+        cell: ({ row }) =>
+          labelOf(dressCategoryLabel, row.original.category),
+      },
       {
         accessorKey: "price",
-        header: "Price",
-        cell: ({ row }) => formatCurrency(row.original.price),
+        header: "السعر",
+        cell: ({ row }) => (
+          <span dir="ltr">{formatCurrency(row.original.price)}</span>
+        ),
       },
       {
         accessorKey: "status",
-        header: "Status",
+        header: "الحالة",
         cell: ({ row }) => <StatusBadge status={row.original.status} />,
       },
       {
         id: "actions",
-        header: "Actions",
+        header: "إجراءات",
         cell: ({ row }) => {
           const d = row.original;
           return (
             <div className="flex flex-wrap gap-1">
               <Button size="sm" variant="outline" onClick={() => setSelected(d)}>
-                View
+                عرض
               </Button>
               <Button size="sm" variant="outline" onClick={() => approveDress(d.id)}>
-                Approve
+                قبول
               </Button>
               <Button size="sm" variant="secondary" onClick={() => rejectDress(d.id)}>
-                Reject
+                رفض
               </Button>
               <Button size="sm" variant="outline" onClick={() => hideDress(d.id)}>
-                Hide
+                إخفاء
               </Button>
               <Button
                 size="sm"
                 variant="destructive"
                 onClick={() => {
-                  if (confirm(`Delete ${d.name}?`)) deleteDress(d.id);
+                  if (confirm(`حذف ${d.name}؟`)) deleteDress(d.id);
                 }}
               >
-                Delete
+                حذف
               </Button>
             </div>
           );
@@ -116,26 +124,26 @@ export default function DressesPage() {
   return (
     <div>
       <PageHeader
-        title="Dresses"
-        description="Review personal and store inventory listings."
+        title="الفساتين"
+        description="مراجعة قوائم الفساتين الشخصية وتلك التابعة للمحلات."
         actions={
           <select
             className="h-10 rounded-md border border-border bg-card px-3 text-sm"
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
           >
-            <option value="all">All</option>
-            <option value="pending">Pending</option>
-            <option value="available">Available</option>
-            <option value="rejected">Rejected</option>
-            <option value="hidden">Hidden</option>
+            <option value="all">الكل</option>
+            <option value="pending">قيد المراجعة</option>
+            <option value="available">متاح</option>
+            <option value="rejected">مرفوض</option>
+            <option value="hidden">مخفي</option>
           </select>
         }
       />
       <DataTable
         columns={columns}
         data={data}
-        searchPlaceholder="Search dresses…"
+        searchPlaceholder="ابحث عن فستان…"
         globalFilterFn={(row, q) =>
           [row.name, row.category, row.color, row.status]
             .join(" ")
@@ -161,12 +169,19 @@ export default function DressesPage() {
               />
               <p className="text-sm text-muted-foreground">{selected.description}</p>
               <div className="grid grid-cols-2 gap-2 text-sm">
-                <p>Category: {selected.category}</p>
-                <p>Color: {selected.color}</p>
-                <p>Size: {selected.size}</p>
-                <p>Price: {formatCurrency(selected.price)}</p>
-                <p>Deposit: {formatCurrency(selected.deposit)}</p>
-                <p>Rentals: {selected.rentalCount}</p>
+                <p>الفئة: {labelOf(dressCategoryLabel, selected.category)}</p>
+                <p>اللون: {selected.color}</p>
+                <p>المقاس: {selected.size}</p>
+                <p>
+                  السعر: <span dir="ltr">{formatCurrency(selected.price)}</span>
+                </p>
+                <p>
+                  التأمين:{" "}
+                  <span dir="ltr">{formatCurrency(selected.deposit)}</span>
+                </p>
+                <p>
+                  مرات الإيجار: <span dir="ltr">{selected.rentalCount}</span>
+                </p>
               </div>
             </div>
           ) : null}

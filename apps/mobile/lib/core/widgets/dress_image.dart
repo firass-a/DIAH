@@ -10,7 +10,12 @@ bool isNetworkImageSource(String source) {
   return s.startsWith('http://') || s.startsWith('https://');
 }
 
-/// Renders a dress image from a network URL or a local gallery file path.
+bool isAssetImageSource(String source) {
+  final s = source.trim();
+  return s.startsWith('assets/');
+}
+
+/// Renders a dress image from a network URL, bundled asset, or local file path.
 class DressImage extends StatelessWidget {
   const DressImage({
     super.key,
@@ -56,6 +61,14 @@ class DressImage extends StatelessWidget {
           color: DiahColors.softLavender,
         ),
         errorWidget: (_, _, _) => placeholder,
+      );
+    } else if (isAssetImageSource(source)) {
+      image = Image.asset(
+        source.trim(),
+        width: width,
+        height: height,
+        fit: fit,
+        errorBuilder: (_, _, _) => placeholder,
       );
     } else {
       final file = File(source);

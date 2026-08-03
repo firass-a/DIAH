@@ -500,7 +500,7 @@ class _OwnerAddEditDressScreenState
                                 ? OwnerColors.accent
                                 : DiahColors.textMuted,
                             fontWeight:
-                                active ? FontWeight.w600 : FontWeight.w400,
+                                active ? FontWeight.w800 : FontWeight.w600,
                           ),
                         ),
                       ],

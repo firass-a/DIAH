@@ -182,6 +182,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                     itemBuilder: (_, i) => DressCard(
                       dress: results[i],
                       width: double.infinity,
+                      heroScope: 'search-$i',
                     ),
                   ),
           ),
@@ -376,7 +377,11 @@ class FavoritesScreen extends ConsumerWidget {
               ),
               itemCount: dresses.length,
               itemBuilder: (_, i) =>
-                  DressCard(dress: dresses[i], width: double.infinity),
+                  DressCard(
+                    dress: dresses[i],
+                    width: double.infinity,
+                    heroScope: 'fav-$i',
+                  ),
             ),
     );
   }

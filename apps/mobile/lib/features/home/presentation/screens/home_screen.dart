@@ -112,8 +112,8 @@ class HomeScreen extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(24),
                 child: Stack(
                   children: [
-                    Image.network(
-                      'https://images.unsplash.com/photo-1519741497674-611481863552?w=1000',
+                    Image.asset(
+                      'assets/images/wedding_dress.png',
                       height: 200,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -218,7 +218,8 @@ class HomeScreen extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     itemCount: featured.length,
                     separatorBuilder: (_, _) => const SizedBox(width: 14),
-                    itemBuilder: (_, i) => DressCard(dress: featured[i]),
+                    itemBuilder: (_, i) =>
+                        DressCard(dress: featured[i], heroScope: 'featured'),
                   ),
                 ),
               ],
@@ -243,7 +244,8 @@ class HomeScreen extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     itemCount: trending.length,
                     separatorBuilder: (_, _) => const SizedBox(width: 14),
-                    itemBuilder: (_, i) => DressCard(dress: trending[i]),
+                    itemBuilder: (_, i) =>
+                        DressCard(dress: trending[i], heroScope: 'trending'),
                   ),
                 ),
               ],
@@ -281,7 +283,8 @@ class HomeScreen extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     itemCount: recent.length,
                     separatorBuilder: (_, _) => const SizedBox(width: 14),
-                    itemBuilder: (_, i) => DressCard(dress: recent[i]),
+                    itemBuilder: (_, i) =>
+                        DressCard(dress: recent[i], heroScope: 'recent'),
                   ),
                 ),
               ],
@@ -346,7 +349,7 @@ class _CategoryTile extends StatelessWidget {
               textAlign: TextAlign.center,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
+              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
             ),
           ],
         ),

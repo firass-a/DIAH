@@ -43,7 +43,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               style: GoogleFonts.dmSans(
                 fontSize: 16,
                 color: DiahColors.primary,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w700,
               ),
             ).animate().fadeIn(delay: 350.ms, duration: 600.ms),
           ],

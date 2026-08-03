@@ -77,7 +77,7 @@ class NotificationsScreen extends ConsumerWidget {
                                 n.title,
                                 style: TextStyle(
                                   fontWeight:
-                                      n.isRead ? FontWeight.w500 : FontWeight.w700,
+                                      n.isRead ? FontWeight.w600 : FontWeight.w800,
                                 ),
                               ),
                               const SizedBox(height: 4),

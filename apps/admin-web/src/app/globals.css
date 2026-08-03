@@ -14,8 +14,8 @@
   --color-destructive: #c23b4b;
   --color-success: #2f8f6b;
   --color-warning: #c28a2e;
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-sans: var(--font-cairo), "Cairo", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-naskh), "Noto Naskh Arabic", serif;
   --radius-lg: 0.9rem;
   --radius-md: 0.65rem;
   --radius-sm: 0.45rem;

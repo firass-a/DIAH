@@ -548,7 +548,7 @@ class _MenuTile extends StatelessWidget {
               child: Text(
                 title,
                 style: TextStyle(
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w700,
                   color: danger ? DiahColors.error : DiahColors.text,
                 ),
               ),
